@@ -1,0 +1,1888 @@
+package control;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.undo.UndoManager;
+import filtros.Filtros;
+
+/**
+ * 
+ * @author Administrador
+ */
+public class ExibeImagem extends javax.swing.JFrame {
+
+   static public BufferedImage createBufferedImage(final Image imageIn, final int imageType) {
+      // MediaTracker mt = new MediaTracker(comp);
+      // mt.addImage(imageIn, 0);
+      // try {
+      // mt.waitForID(0);
+      // } catch (InterruptedException ie) {
+      // }
+      final BufferedImage bufferedImageOut = new BufferedImage(imageIn.getWidth(null), imageIn.getHeight(null), imageType);
+      final Graphics g = bufferedImageOut.getGraphics();
+      g.drawImage(imageIn, 0, 0, null);
+
+      return bufferedImageOut;
+   }
+
+   /**
+    * @param args
+    *           the command line arguments
+    */
+   public static void main(final String args[]) {
+
+      new ExibeImagem().setVisible(true);
+
+   }
+
+   private BufferedImage bi = null;
+
+   private boolean drillChata = false;
+   private Filtros filtros = null;
+
+   // Variables declaration - do not modify//GEN-BEGIN:variables
+   private javax.swing.JMenuItem jMBARGB;
+
+   private javax.swing.JMenuItem jMBAYIQ;
+
+   private javax.swing.JMenuItem jMBMRGB;
+
+   private javax.swing.JMenuItem jMBMYIQ;
+
+   private javax.swing.JMenu jMBrilhoAditivo;
+
+   private javax.swing.JMenu jMBrilhoMultiplicativo;
+
+   private javax.swing.JMenu jMDesvioPadrao;
+
+   private javax.swing.JMenuItem jMDPRGB;
+
+   private javax.swing.JMenuItem jMDPYIQ;
+
+   private javax.swing.JMenu jMenu1;
+
+   private javax.swing.JMenu jMenu2;
+
+   private javax.swing.JMenu jMenu3;
+
+   private javax.swing.JMenu jMenu4;
+
+   private javax.swing.JMenuBar jMenuBar1;
+
+   private javax.swing.JMenuItem jMenuItem1;
+
+   private javax.swing.JMenuItem jMenuItem2;
+
+   private javax.swing.JMenuItem jMenuItem3;
+
+   private javax.swing.JMenuItem jMenuItem4;
+
+   private javax.swing.JMenuItem jMenuItem6;
+
+   private javax.swing.JMenuItem jMenuItem7;
+
+   private javax.swing.JMenuItem jMMediaImagens;
+
+   private javax.swing.JMenuItem jMMedianaRGB;
+
+   private javax.swing.JMenuItem jMMedianaYIQ;
+
+   private javax.swing.JMenuItem jMMediaRGB;
+
+   private javax.swing.JMenuItem jMMediaYIQ;
+
+   private javax.swing.JMenuItem jMModaRGB;
+
+   private javax.swing.JMenuItem jMModaYIQ;
+
+   private javax.swing.JMenu jMNegativo;
+
+   private javax.swing.JMenuItem jMNegRGB;
+
+   private javax.swing.JMenuItem jMNegYIQ;
+
+   private javax.swing.JMenu jMSuaveMedia;
+
+   private javax.swing.JMenu jMSuaveMediana;
+
+   private javax.swing.JMenu jMSuaveModa;
+
+   private javax.swing.JMenu jMSuavizacao;
+   private javax.swing.JPanel jPanel1;
+   private javax.swing.JSeparator jSeparator1;
+   private javax.swing.JToolBar jToolBar1;
+   // End of variables declaration//GEN-END:variables
+   private javax.swing.JMenuItem mnuItenBinariza;
+   private JMenuItem mnuItenEqualiza;
+   private javax.swing.JMenuItem mnuItenEscaladeCinza;
+   private javax.swing.JMenuItem mnuItenEsqueleto;
+   private javax.swing.JMenuItem mnuItenLocaliza;
+   private JMenuItem mnuItenLocalizaTest;
+   private JMenuItem mnuItenLocalizaTudo;
+   private javax.swing.JMenuItem mnuItenPassaAlta;
+
+   // UndoManager is the undo history
+   protected UndoManager undoManager;
+
+   /** Creates new form GUI */
+   public ExibeImagem() {
+      this.initComponents();
+      this.setTitle("Humbot");
+      this.setExtendedState(Frame.MAXIMIZED_BOTH);
+
+      this.jMenuItem6.setEnabled(false);
+      this.jMenuItem7.setEnabled(false);
+   }
+
+   public void exit() {
+      if (this.drillChata == true) {
+         final Object[] options = { "Salvar", "Descartar", "Cancelar" };
+
+         final int selection = JOptionPane.showOptionDialog(null, "Deseja salvar o arquivo antes de sair?", "Salvar",
+                  JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+         if (selection == JOptionPane.YES_OPTION) {
+            // HERE
+            // saveFile();
+         } else if (selection == JOptionPane.NO_OPTION) {
+            System.exit(0);
+         } else {
+            return;
+         }
+      } else {
+         System.exit(0);
+      }
+   }
+
+   /**
+    * This method is called from within the constructor to initialize the form.
+    * WARNING: Do NOT modify this code. The content of this method is always
+    * regenerated by the Form Editor.
+    */
+   // <editor-fold defaultstate="collapsed"
+   // desc=" Generated Code ">//GEN-BEGIN:initComponents
+   private void initComponents() {
+      this.jPanel1 = new javax.swing.JPanel();
+      this.jToolBar1 = new javax.swing.JToolBar();
+      this.jMenuBar1 = new javax.swing.JMenuBar();
+      this.jMenu1 = new javax.swing.JMenu();
+      this.jMenuItem1 = new javax.swing.JMenuItem();
+      this.jMenuItem3 = new javax.swing.JMenuItem();
+      this.jMenuItem2 = new javax.swing.JMenuItem();
+      this.mnuItenEscaladeCinza = new javax.swing.JMenuItem();
+      this.mnuItenPassaAlta = new javax.swing.JMenuItem();
+      this.mnuItenBinariza = new JMenuItem();
+      this.mnuItenLocaliza = new JMenuItem();
+      this.mnuItenLocalizaTudo = new JMenuItem();
+      this.mnuItenLocalizaTest = new JMenuItem();
+      this.mnuItenEqualiza = new JMenuItem();
+      this.mnuItenEsqueleto = new JMenuItem();
+      this.jMenu2 = new javax.swing.JMenu();
+      this.jMenuItem6 = new javax.swing.JMenuItem();
+      this.jMenuItem7 = new javax.swing.JMenuItem();
+      this.jMenu3 = new javax.swing.JMenu();
+      this.jMBrilhoAditivo = new javax.swing.JMenu();
+      this.jMBARGB = new javax.swing.JMenuItem();
+      this.jMBAYIQ = new javax.swing.JMenuItem();
+      this.jMBrilhoMultiplicativo = new javax.swing.JMenu();
+      this.jMBMRGB = new javax.swing.JMenuItem();
+      this.jMBMYIQ = new javax.swing.JMenuItem();
+      this.jMNegativo = new javax.swing.JMenu();
+      this.jMNegRGB = new javax.swing.JMenuItem();
+      this.jMNegYIQ = new javax.swing.JMenuItem();
+      this.jMSuavizacao = new javax.swing.JMenu();
+      this.jMSuaveMedia = new javax.swing.JMenu();
+      this.jMMediaRGB = new javax.swing.JMenuItem();
+      this.jMMediaYIQ = new javax.swing.JMenuItem();
+      this.jMSuaveMediana = new javax.swing.JMenu();
+      this.jMMedianaRGB = new javax.swing.JMenuItem();
+      this.jMMedianaYIQ = new javax.swing.JMenuItem();
+      this.jMSuaveModa = new javax.swing.JMenu();
+      this.jMModaRGB = new javax.swing.JMenuItem();
+      this.jMModaYIQ = new javax.swing.JMenuItem();
+      this.jMDesvioPadrao = new javax.swing.JMenu();
+      this.jMDPRGB = new javax.swing.JMenuItem();
+      this.jMDPYIQ = new javax.swing.JMenuItem();
+      this.jSeparator1 = new javax.swing.JSeparator();
+      this.jMMediaImagens = new javax.swing.JMenuItem();
+      this.jMenu4 = new javax.swing.JMenu();
+      this.jMenuItem4 = new javax.swing.JMenuItem();
+
+      this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+      this.jPanel1.setLayout(new javax.swing.BoxLayout(this.jPanel1, javax.swing.BoxLayout.X_AXIS));
+
+      this.jMenu1.setText("Arquivo");
+      this.jMenu1.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMenu1ActionPerformed(evt);
+         }
+      });
+
+      this.jMenuItem1.setLabel("Abrir...     (CTRL+O)");
+      this.jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMenuItem1ActionPerformed(evt);
+         }
+      });
+
+      this.mnuItenEscaladeCinza.setText("Escalas de Cinza");
+      this.jMenu3.add(this.mnuItenEscaladeCinza);
+      this.mnuItenEscaladeCinza.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            this.mnuItenEscaladeCinzaActionPerformed(evt);
+         }
+
+         private void mnuItenEscaladeCinzaActionPerformed(final ActionEvent evt) {
+
+            JInternalFrame jif = null;
+            final Component[] com = ExibeImagem.this.jPanel1.getComponents();
+            for (final Component c : com) {
+
+               if (c instanceof JInternalFrame) {
+
+                  final JInternalFrame frame = (JInternalFrame) c;
+                  if (frame.isSelected()) {
+                     jif = frame;
+                     break;
+                  }
+               }
+            }
+            if (jif != null) {
+
+               final BufferedImage b = ExibeImagem.this.filtros.ToGray();
+               final JInternalFrame picFrame = new JInternalFrame();
+               // picFrame.setLayout(new BorderLayout());
+
+               picFrame.setClosable(true);
+               picFrame.setResizable(true);
+               picFrame.setMaximizable(true);
+
+               final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(),
+                        BufferedImage.TYPE_BYTE_GRAY)));
+
+               picFrame.add(picLabel, BorderLayout.CENTER);
+               ExibeImagem.this.jPanel1.add(picFrame);
+               picFrame.setVisible(true);
+               picLabel.setVisible(true);
+            }
+
+         }
+      });
+
+      this.mnuItenBinariza.setText("Binarizar");
+      this.jMenu3.add(this.mnuItenBinariza);
+      this.mnuItenBinariza.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            this.mnuItenBinarizaActionPerformed(evt);
+         }
+
+         private void mnuItenBinarizaActionPerformed(final ActionEvent evt) {
+
+            JInternalFrame jif = null;
+            final Component[] com = ExibeImagem.this.jPanel1.getComponents();
+            for (final Component c : com) {
+
+               if (c instanceof JInternalFrame) {
+
+                  final JInternalFrame frame = (JInternalFrame) c;
+                  if (frame.isSelected()) {
+                     jif = frame;
+                     break;
+                  }
+               }
+            }
+            if (jif != null) {
+
+               final BufferedImage b = ExibeImagem.this.filtros.autoThreshold();
+               final JInternalFrame picFrame = new JInternalFrame();
+               // picFrame.setLayout(new BorderLayout());
+
+               picFrame.setClosable(true);
+               picFrame.setResizable(true);
+               picFrame.setMaximizable(true);
+
+               final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(),
+                        BufferedImage.TYPE_BYTE_GRAY)));
+
+               picFrame.add(picLabel, BorderLayout.CENTER);
+               ExibeImagem.this.jPanel1.add(picFrame);
+               picFrame.setVisible(true);
+               picLabel.setVisible(true);
+            }
+
+         }
+      });
+      this.mnuItenPassaAlta.setText("Passa Alta");
+      this.jMenu3.add(this.mnuItenPassaAlta);
+      this.mnuItenPassaAlta.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            this.mnuItenPassaAltaActionPerformed(evt);
+         }
+
+         private void mnuItenPassaAltaActionPerformed(final ActionEvent evt) {
+
+            JInternalFrame jif = null;
+            final Component[] com = ExibeImagem.this.jPanel1.getComponents();
+            for (final Component c : com) {
+
+               if (c instanceof JInternalFrame) {
+
+                  final JInternalFrame frame = (JInternalFrame) c;
+                  if (frame.isSelected()) {
+                     jif = frame;
+                     break;
+                  }
+               }
+            }
+            if (jif != null) {
+
+               BufferedImage b = null;
+               try {
+                  b = ImageIO.read(new File(jif.getTitle()));
+
+                  b = ExibeImagem.this.filtros.PassaAltaVertical();
+
+                  final JInternalFrame picFrame = new JInternalFrame();
+                  // picFrame.setLayout(new BorderLayout());
+
+                  picFrame.setClosable(true);
+                  picFrame.setResizable(true);
+                  picFrame.setMaximizable(true);
+
+                  final JLabel picLabel = new JLabel(new ImageIcon(b));
+
+                  picFrame.add(picLabel, BorderLayout.CENTER);
+                  ExibeImagem.this.jPanel1.add(picFrame);
+
+                  picFrame.setVisible(true);
+                  picLabel.setVisible(true);
+               }
+               catch (final IOException ex) {
+                  ex.printStackTrace();
+               }
+            }
+
+         }
+      });
+
+      this.mnuItenLocalizaTudo.setText("LocalizaTudo");
+      this.jMenu3.add(this.mnuItenLocalizaTudo);
+      this.mnuItenLocalizaTudo.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            this.mnuItenLocalizaTudoActionPerformed(evt);
+         }
+
+         private void mnuItenLocalizaTudoActionPerformed(final ActionEvent evt) {
+            final Filtros f = new Filtros();
+            BufferedImage b = null;
+            for (int i = 1; i <= 109; i++) {
+               try {
+                  final File arquivo = new File(".\\ImagensIn\\pic (" + i + ").jpg");
+                  if (arquivo.exists()) {
+                     b = ImageIO.read(arquivo);
+                     f.setImage(b);
+                     b = f.LocalizaComEsqueletoTudo();
+                     ImageIO.write(b, "JPG", new File("pic (" + i + ").jpg"));
+                  }
+               }
+               catch (final IOException ex) {
+                  ex.printStackTrace();
+               }
+            }
+         }
+
+      });
+
+      this.mnuItenEsqueleto.setText("Esqueleto");
+      this.jMenu3.add(this.mnuItenEsqueleto);
+      this.mnuItenEsqueleto.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            this.mnuItenEsqueletoActionPerformed(evt);
+         }
+
+         private void mnuItenEsqueletoActionPerformed(final ActionEvent evt) {
+
+            JInternalFrame jif = null;
+            final Component[] com = ExibeImagem.this.jPanel1.getComponents();
+            for (final Component c : com) {
+
+               if (c instanceof JInternalFrame) {
+
+                  final JInternalFrame frame = (JInternalFrame) c;
+                  if (frame.isSelected()) {
+                     jif = frame;
+                     break;
+                  }
+               }
+            }
+            if (jif != null) {
+
+               BufferedImage b = null;
+               try {
+                  b = ImageIO.read(new File(jif.getTitle()));
+
+                  b = ExibeImagem.this.filtros.Esqueleto();
+
+                  final JInternalFrame picFrame = new JInternalFrame();
+                  // picFrame.setLayout(new BorderLayout());
+
+                  picFrame.setClosable(true);
+                  picFrame.setResizable(true);
+                  picFrame.setMaximizable(true);
+
+                  final JLabel picLabel = new JLabel(new ImageIcon(b));
+
+                  picFrame.add(picLabel, BorderLayout.CENTER);
+                  ExibeImagem.this.jPanel1.add(picFrame);
+
+                  picFrame.setVisible(true);
+                  picLabel.setVisible(true);
+               }
+               catch (final IOException ex) {
+                  ex.printStackTrace();
+               }
+            }
+
+         }
+      });
+
+      this.mnuItenLocalizaTest.setText("Teste");
+      this.jMenu3.add(this.mnuItenLocalizaTest);
+      this.mnuItenLocalizaTest.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            this.mnuItenLocalizaTestActionPerformed(evt);
+         }
+
+         private void mnuItenLocalizaTestActionPerformed(final ActionEvent evt) {
+
+            JInternalFrame jif = null;
+            final Component[] com = ExibeImagem.this.jPanel1.getComponents();
+            for (final Component c : com) {
+
+               if (c instanceof JInternalFrame) {
+
+                  final JInternalFrame frame = (JInternalFrame) c;
+                  if (frame.isSelected()) {
+                     jif = frame;
+                     break;
+                  }
+               }
+            }
+            if (jif != null) {
+
+               BufferedImage b = null;
+               try {
+                  b = ImageIO.read(new File(jif.getTitle()));
+
+                  b = ExibeImagem.this.filtros.LocalizaTest2();
+
+                  final JInternalFrame picFrame = new JInternalFrame();
+                  // picFrame.setLayout(new BorderLayout());
+
+                  picFrame.setClosable(true);
+                  picFrame.setResizable(true);
+                  picFrame.setMaximizable(true);
+
+                  final JLabel picLabel = new JLabel(new ImageIcon(b));
+
+                  picFrame.add(picLabel, BorderLayout.CENTER);
+                  ExibeImagem.this.jPanel1.add(picFrame);
+
+                  picFrame.setVisible(true);
+                  picLabel.setVisible(true);
+               }
+               catch (final IOException ex) {
+                  ex.printStackTrace();
+               }
+            }
+
+         }
+      });
+
+      this.mnuItenEqualiza.setText("Equaliza");
+      this.jMenu3.add(this.mnuItenEqualiza);
+      this.mnuItenEqualiza.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            this.mnuItenEqualizaActionPerformed(evt);
+         }
+
+         private void mnuItenEqualizaActionPerformed(final ActionEvent evt) {
+
+            JInternalFrame jif = null;
+            final Component[] com = ExibeImagem.this.jPanel1.getComponents();
+            for (final Component c : com) {
+
+               if (c instanceof JInternalFrame) {
+
+                  final JInternalFrame frame = (JInternalFrame) c;
+                  if (frame.isSelected()) {
+                     jif = frame;
+                     break;
+                  }
+               }
+            }
+            if (jif != null) {
+
+               BufferedImage b = null;
+               try {
+                  b = ImageIO.read(new File(jif.getTitle()));
+
+                  b = ExibeImagem.this.filtros.Equaliza();
+
+                  final JInternalFrame picFrame = new JInternalFrame();
+                  // picFrame.setLayout(new BorderLayout());
+
+                  picFrame.setClosable(true);
+                  picFrame.setResizable(true);
+                  picFrame.setMaximizable(true);
+
+                  final JLabel picLabel = new JLabel(new ImageIcon(b));
+
+                  picFrame.add(picLabel, BorderLayout.CENTER);
+                  ExibeImagem.this.jPanel1.add(picFrame);
+
+                  picFrame.setVisible(true);
+                  picLabel.setVisible(true);
+               }
+               catch (final IOException ex) {
+                  ex.printStackTrace();
+               }
+            }
+
+         }
+      });
+
+      this.mnuItenLocaliza.setText("Localiza");
+      this.jMenu3.add(this.mnuItenLocaliza);
+      this.mnuItenLocaliza.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            this.mnuItenLocalizaActionPerformed(evt);
+         }
+
+         private void mnuItenLocalizaActionPerformed(final ActionEvent evt) {
+
+            JInternalFrame jif = null;
+            final Component[] com = ExibeImagem.this.jPanel1.getComponents();
+            for (final Component c : com) {
+
+               if (c instanceof JInternalFrame) {
+
+                  final JInternalFrame frame = (JInternalFrame) c;
+                  if (frame.isSelected()) {
+                     jif = frame;
+                     break;
+                  }
+               }
+            }
+            if (jif != null) {
+
+               BufferedImage b = null;
+               try {
+                  b = ImageIO.read(new File(jif.getTitle()));
+
+                  b = ExibeImagem.this.filtros.LocalizaComEsqueleto();
+
+                  final JInternalFrame picFrame = new JInternalFrame();
+                  // picFrame.setLayout(new BorderLayout());
+
+                  picFrame.setClosable(true);
+                  picFrame.setResizable(true);
+                  picFrame.setMaximizable(true);
+
+                  final JLabel picLabel = new JLabel(new ImageIcon(b));
+
+                  picFrame.add(picLabel, BorderLayout.CENTER);
+                  ExibeImagem.this.jPanel1.add(picFrame);
+
+                  picFrame.setVisible(true);
+                  picLabel.setVisible(true);
+               }
+               catch (final IOException exception) {
+                  JOptionPane.showMessageDialog(null, "Não foi possivel localizar a placa: [" + exception.getMessage() + "]", "Atenção",
+                           JOptionPane.WARNING_MESSAGE);
+               }
+            }
+
+         }
+      });
+
+      this.jMenu1.add(this.jMenuItem1);
+
+      this.jMenuItem3.setLabel("Salvar       (CTRL+S)");
+      this.jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMenuItem3ActionPerformed(evt);
+         }
+      });
+
+      this.jMenu1.add(this.jMenuItem3);
+
+      this.jMenuItem2.setText("Sair            (ALT+F4)");
+      this.jMenuItem2.setContentAreaFilled(false);
+      this.jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMenuItem2ActionPerformed(evt);
+         }
+      });
+
+      this.jMenu1.add(this.jMenuItem2);
+
+      this.jMenuBar1.add(this.jMenu1);
+
+      this.jMenu2.setLabel("Editar");
+      this.jMenu2.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMenu2ActionPerformed(evt);
+         }
+      });
+
+      this.jMenuItem6.setText("Desfazer    (CTRL+Z)");
+      this.jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMenuItem6ActionPerformed(evt);
+         }
+      });
+
+      this.jMenu2.add(this.jMenuItem6);
+
+      this.jMenuItem7.setText("Refazer      (CTRL+Y)");
+      this.jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMenuItem7ActionPerformed(evt);
+         }
+      });
+
+      this.jMenu2.add(this.jMenuItem7);
+
+      this.jMenuBar1.add(this.jMenu2);
+
+      this.jMenu3.setText("Filtros");
+      this.jMBrilhoAditivo.setText("Brilho Aditivo");
+      this.jMBrilhoAditivo.setDisabledSelectedIcon(new javax.swing.ImageIcon("ril"));
+      this.jMBrilhoAditivo.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMBrilhoAditivoActionPerformed(evt);
+         }
+      });
+
+      this.jMBARGB.setText("RGB");
+      this.jMBARGB.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMBARGBActionPerformed(evt);
+         }
+      });
+
+      this.jMBrilhoAditivo.add(this.jMBARGB);
+
+      this.jMBAYIQ.setText("YIQ");
+      this.jMBAYIQ.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMBAYIQActionPerformed(evt);
+         }
+      });
+
+      this.jMBrilhoAditivo.add(this.jMBAYIQ);
+
+      this.jMenu3.add(this.jMBrilhoAditivo);
+
+      this.jMBrilhoMultiplicativo.setText("Brilho Multiplicativo");
+      this.jMBrilhoMultiplicativo.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMBrilhoMultiplicativoActionPerformed(evt);
+         }
+      });
+
+      this.jMBMRGB.setText("RGB");
+      this.jMBMRGB.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMBMRGBActionPerformed(evt);
+         }
+      });
+
+      this.jMBrilhoMultiplicativo.add(this.jMBMRGB);
+
+      this.jMBMYIQ.setText("YIQ");
+      this.jMBMYIQ.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMBMYIQActionPerformed(evt);
+         }
+      });
+
+      this.jMBrilhoMultiplicativo.add(this.jMBMYIQ);
+
+      this.jMenu3.add(this.jMBrilhoMultiplicativo);
+
+      this.jMNegativo.setText("Negativo");
+      this.jMNegRGB.setText("RGB");
+      this.jMNegRGB.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMNegRGBActionPerformed(evt);
+         }
+      });
+
+      this.jMNegativo.add(this.jMNegRGB);
+
+      this.jMNegYIQ.setText("YIQ");
+      this.jMNegYIQ.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMNegYIQActionPerformed(evt);
+         }
+      });
+
+      this.jMNegativo.add(this.jMNegYIQ);
+
+      this.jMenu3.add(this.jMNegativo);
+
+      this.jMSuavizacao.setText("Suaviza\u00e7\u00e3o");
+      this.jMSuaveMedia.setText("Media");
+      this.jMSuaveMedia.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMSuaveMediaActionPerformed(evt);
+         }
+      });
+
+      this.jMMediaRGB.setText("RGB");
+      this.jMMediaRGB.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMMediaRGBActionPerformed(evt);
+         }
+      });
+
+      this.jMSuaveMedia.add(this.jMMediaRGB);
+
+      this.jMMediaYIQ.setText("YIQ");
+      this.jMMediaYIQ.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMMediaYIQActionPerformed(evt);
+         }
+      });
+
+      this.jMSuaveMedia.add(this.jMMediaYIQ);
+
+      this.jMSuavizacao.add(this.jMSuaveMedia);
+
+      this.jMSuaveMediana.setText("Mediana");
+      this.jMMedianaRGB.setText("RGB");
+      this.jMMedianaRGB.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMMedianaRGBActionPerformed(evt);
+         }
+      });
+
+      this.jMSuaveMediana.add(this.jMMedianaRGB);
+
+      this.jMMedianaYIQ.setText("YIQ");
+      this.jMMedianaYIQ.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMMedianaYIQActionPerformed(evt);
+         }
+      });
+
+      this.jMSuaveMediana.add(this.jMMedianaYIQ);
+
+      this.jMSuavizacao.add(this.jMSuaveMediana);
+
+      this.jMSuaveModa.setText("Moda");
+      this.jMModaRGB.setText("RGB");
+      this.jMModaRGB.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMModaRGBActionPerformed(evt);
+         }
+      });
+
+      this.jMSuaveModa.add(this.jMModaRGB);
+
+      this.jMModaYIQ.setText("YIQ");
+      this.jMModaYIQ.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMModaYIQActionPerformed(evt);
+         }
+      });
+
+      this.jMSuaveModa.add(this.jMModaYIQ);
+
+      this.jMSuavizacao.add(this.jMSuaveModa);
+
+      this.jMenu3.add(this.jMSuavizacao);
+
+      this.jMDesvioPadrao.setText("Desvio Padr\u00e3o");
+      this.jMDPRGB.setText("RGB");
+      this.jMDPRGB.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMDPRGBActionPerformed(evt);
+         }
+      });
+
+      this.jMDesvioPadrao.add(this.jMDPRGB);
+
+      this.jMDPYIQ.setText("YIQ");
+      this.jMDPYIQ.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMDPYIQActionPerformed(evt);
+         }
+      });
+
+      this.jMDesvioPadrao.add(this.jMDPYIQ);
+
+      this.jMenu3.add(this.jMDesvioPadrao);
+
+      this.jMenu3.add(this.jSeparator1);
+
+      this.jMMediaImagens.setText("Media de Duas Imagens");
+      this.jMMediaImagens.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMMediaImagensActionPerformed(evt);
+         }
+      });
+
+      this.jMenu3.add(this.jMMediaImagens);
+
+      this.jMenuBar1.add(this.jMenu3);
+
+      this.jMenu4.setLabel("Ajuda");
+      this.jMenuItem4.setText("Sobre...");
+      this.jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+
+         @Override
+         public void actionPerformed(final java.awt.event.ActionEvent evt) {
+            ExibeImagem.this.jMenuItem4ActionPerformed(evt);
+         }
+      });
+
+      this.jMenu4.add(this.jMenuItem4);
+
+      this.jMenuBar1.add(this.jMenu4);
+
+      this.setJMenuBar(this.jMenuBar1);
+
+      final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this.getContentPane());
+      this.getContentPane().setLayout(layout);
+      layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+               .addComponent(this.jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
+               .addComponent(this.jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE));
+      layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+               layout.createSequentialGroup()
+                        .addComponent(this.jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(this.jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)));
+      final java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+      this.setBounds((screenSize.width - 574) / 2, (screenSize.height - 388) / 2, 574, 388);
+   }// </editor-fold>//GEN-END:initComponents
+
+   private void jMBARGBActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMBARGBActionPerformed
+
+      JInternalFrame jif = null;
+      final Component[] com = this.jPanel1.getComponents();
+      for (final Component c : com) {
+
+         if (c instanceof JInternalFrame) {
+
+            final JInternalFrame frame = (JInternalFrame) c;
+            if (frame.isSelected()) {
+               jif = frame;
+               break;
+            }
+         }
+      }
+      if (jif != null) {
+
+         BufferedImage b = null;
+         try {
+            b = ImageIO.read(new File(jif.getTitle()));
+
+            final String valor = JOptionPane.showInputDialog(this, "Intensidade do Brilho: (Numero Inteiro)", "Intensidade",
+                     JOptionPane.OK_OPTION);
+
+            final int v = (int) Double.parseDouble(valor);
+
+            b = this.filtros.aditiveBrightRGB(v);
+
+            final JInternalFrame picFrame = new JInternalFrame();
+            // picFrame.setLayout(new BorderLayout());
+
+            picFrame.setClosable(true);
+            picFrame.setResizable(true);
+            picFrame.setMaximizable(true);
+            picFrame.setTitle("Brilho Aditivo RGB - Fator: " + v);
+
+            final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(), 3)));
+
+            picFrame.add(picLabel, BorderLayout.CENTER);
+            this.jPanel1.add(picFrame);
+
+            picFrame.setVisible(true);
+            picLabel.setVisible(true);
+         }
+         catch (final IOException ex) {
+            ex.printStackTrace();
+         }
+      }
+
+   }// GEN-LAST:event_jMBARGBActionPerformed
+
+   private void jMBAYIQActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMBAYIQActionPerformed
+
+      JInternalFrame jif = null;
+      final Component[] com = this.jPanel1.getComponents();
+      for (final Component c : com) {
+
+         if (c instanceof JInternalFrame) {
+
+            final JInternalFrame frame = (JInternalFrame) c;
+            if (frame.isSelected()) {
+               jif = frame;
+               break;
+            }
+         }
+      }
+      if (jif != null) {
+
+         BufferedImage b = null;
+         try {
+            b = ImageIO.read(new File(jif.getTitle()));
+
+            final String valor = JOptionPane.showInputDialog(this, "Intensidade do Brilho: (Numero Inteiro)", "Intensidade",
+                     JOptionPane.OK_OPTION);
+
+            final int v = (int) Double.parseDouble(valor);
+
+            b = this.filtros.aditiveBrightYIQ(v);
+
+            final JInternalFrame picFrame = new JInternalFrame();
+            // picFrame.setLayout(new BorderLayout());
+
+            picFrame.setClosable(true);
+            picFrame.setResizable(true);
+            picFrame.setMaximizable(true);
+            picFrame.setTitle("Brilho Aditivo YIQ - Fator: " + v);
+
+            final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(), 3)));
+
+            picFrame.add(picLabel, BorderLayout.CENTER);
+            this.jPanel1.add(picFrame);
+
+            picFrame.setVisible(true);
+            picLabel.setVisible(true);
+         }
+         catch (final IOException ex) {
+            ex.printStackTrace();
+         }
+      }
+
+   }// GEN-LAST:event_jMBAYIQActionPerformed
+
+   private void jMBMRGBActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMBMRGBActionPerformed
+
+      JInternalFrame jif = null;
+      final Component[] com = this.jPanel1.getComponents();
+      for (final Component c : com) {
+
+         if (c instanceof JInternalFrame) {
+
+            final JInternalFrame frame = (JInternalFrame) c;
+            if (frame.isSelected()) {
+               jif = frame;
+               break;
+            }
+         }
+      }
+      if (jif != null) {
+
+         BufferedImage b = null;
+         try {
+            b = ImageIO.read(new File(jif.getTitle()));
+
+            final String valor = JOptionPane.showInputDialog(this, "Intensidade do Brilho: (Numero Fracionario)", "Intensidade",
+                     JOptionPane.OK_OPTION);
+
+            final double v = Double.parseDouble(valor);
+
+            b = this.filtros.multiplicativeBrightRGB(v);
+
+            final JInternalFrame picFrame = new JInternalFrame();
+            // picFrame.setLayout(new BorderLayout());
+
+            picFrame.setClosable(true);
+            picFrame.setResizable(true);
+            picFrame.setMaximizable(true);
+            picFrame.setTitle("Brilho Multiplicativo RGB - Fator: " + v);
+
+            final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(), 3)));
+
+            picFrame.add(picLabel, BorderLayout.CENTER);
+            this.jPanel1.add(picFrame);
+
+            picFrame.setVisible(true);
+            picLabel.setVisible(true);
+         }
+         catch (final IOException ex) {
+            ex.printStackTrace();
+         }
+      }
+
+   }// GEN-LAST:event_jMBMRGBActionPerformed
+
+   private void jMBMYIQActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMBMYIQActionPerformed
+
+      JInternalFrame jif = null;
+      final Component[] com = this.jPanel1.getComponents();
+      for (final Component c : com) {
+
+         if (c instanceof JInternalFrame) {
+
+            final JInternalFrame frame = (JInternalFrame) c;
+            if (frame.isSelected()) {
+               jif = frame;
+               break;
+            }
+         }
+      }
+      if (jif != null) {
+
+         BufferedImage b = null;
+         try {
+            b = ImageIO.read(new File(jif.getTitle()));
+
+            final String valor = JOptionPane.showInputDialog(this, "Intensidade do Brilho: (Numero Fracionario)", "Intensidade",
+                     JOptionPane.OK_OPTION);
+
+            final double v = Double.parseDouble(valor);
+
+            b = this.filtros.multiplicativeBrightYIQ(v);
+
+            final JInternalFrame picFrame = new JInternalFrame();
+            // picFrame.setLayout(new BorderLayout());
+
+            picFrame.setClosable(true);
+            picFrame.setResizable(true);
+            picFrame.setMaximizable(true);
+            picFrame.setTitle("Brilho Multiplicativo YIQ - Fator: " + v);
+
+            final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(), 3)));
+
+            picFrame.add(picLabel, BorderLayout.CENTER);
+            this.jPanel1.add(picFrame);
+
+            picFrame.setVisible(true);
+            picLabel.setVisible(true);
+         }
+         catch (final IOException ex) {
+            ex.printStackTrace();
+         }
+      }
+
+   }// GEN-LAST:event_jMBMYIQActionPerformed
+
+   private void jMBrilhoAditivoActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMBrilhoAditivoActionPerformed
+      // TODO add your handling code here:
+   }// GEN-LAST:event_jMBrilhoAditivoActionPerformed
+
+   private void jMBrilhoMultiplicativoActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMBrilhoMultiplicativoActionPerformed
+      // TODO add your handling code here:
+   }// GEN-LAST:event_jMBrilhoMultiplicativoActionPerformed
+
+   private void jMDPRGBActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMDPRGBActionPerformed
+
+      JInternalFrame jif = null;
+      final Component[] com = this.jPanel1.getComponents();
+      for (final Component c : com) {
+
+         if (c instanceof JInternalFrame) {
+
+            final JInternalFrame frame = (JInternalFrame) c;
+            if (frame.isSelected()) {
+               jif = frame;
+               break;
+            }
+         }
+      }
+      if (jif != null) {
+
+         BufferedImage b = null;
+         try {
+            b = ImageIO.read(new File(jif.getTitle()));
+
+            final String valor = JOptionPane.showInputDialog(this, "Insira a mascara desejada: (Numero Impar Positivo)", "Mascara",
+                     JOptionPane.OK_OPTION);
+
+            final int v = Math.abs(Integer.parseInt(valor));
+
+            b = this.filtros.desvioPadraoRGB(v);
+
+            final JInternalFrame picFrame = new JInternalFrame();
+            // picFrame.setLayout(new BorderLayout());
+
+            picFrame.setClosable(true);
+            picFrame.setResizable(true);
+            picFrame.setMaximizable(true);
+            picFrame.setTitle("Desvio Padrao RGB - Mascara: " + v);
+
+            final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(), 3)));
+
+            picFrame.add(picLabel, BorderLayout.CENTER);
+            this.jPanel1.add(picFrame);
+
+            picFrame.setVisible(true);
+            picLabel.setVisible(true);
+         }
+         catch (final IOException ex) {
+            ex.printStackTrace();
+         }
+      }
+
+   }// GEN-LAST:event_jMDPRGBActionPerformed
+
+   private void jMDPYIQActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMDPYIQActionPerformed
+
+      JInternalFrame jif = null;
+      final Component[] com = this.jPanel1.getComponents();
+      for (final Component c : com) {
+
+         if (c instanceof JInternalFrame) {
+
+            final JInternalFrame frame = (JInternalFrame) c;
+            if (frame.isSelected()) {
+               jif = frame;
+               break;
+            }
+         }
+      }
+      if (jif != null) {
+
+         BufferedImage b = null;
+         try {
+            b = ImageIO.read(new File(jif.getTitle()));
+
+            final String valor = JOptionPane.showInputDialog(this, "Insira a mascara desejada: (Numero Impar Positivo)", "Mascara",
+                     JOptionPane.OK_OPTION);
+
+            final int v = Math.abs(Integer.parseInt(valor));
+
+            b = this.filtros.desvioPadraoYIQ(v);
+
+            final JInternalFrame picFrame = new JInternalFrame();
+            // picFrame.setLayout(new BorderLayout());
+
+            picFrame.setClosable(true);
+            picFrame.setResizable(true);
+            picFrame.setMaximizable(true);
+            picFrame.setTitle("Desvio Padrao YIQ - Mascara: " + v);
+
+            final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(), 3)));
+
+            picFrame.add(picLabel, BorderLayout.CENTER);
+            this.jPanel1.add(picFrame);
+
+            picFrame.setVisible(true);
+            picLabel.setVisible(true);
+         }
+         catch (final IOException ex) {
+            ex.printStackTrace();
+         }
+      }
+
+   }// GEN-LAST:event_jMDPYIQActionPerformed
+
+   private void jMenu1ActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenu1ActionPerformed
+      // TODO add your handling code here:
+   }// GEN-LAST:event_jMenu1ActionPerformed
+
+   private void jMenu2ActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenu2ActionPerformed
+      // TODO add your handling code here:
+   }// GEN-LAST:event_jMenu2ActionPerformed
+
+   private void jMenuItem1ActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem1ActionPerformed
+      this.openFile();
+   }// GEN-LAST:event_jMenuItem1ActionPerformed
+
+   private void jMenuItem2ActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem2ActionPerformed
+      this.exit();
+   }// GEN-LAST:event_jMenuItem2ActionPerformed
+
+   private void jMenuItem3ActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem3ActionPerformed
+      this.saveFile();
+   }// GEN-LAST:event_jMenuItem3ActionPerformed
+
+   private void jMenuItem4ActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem4ActionPerformed
+      // TODO add your handling code here:
+      this.manutencao("Sobre o PhotoSMTH");
+   }// GEN-LAST:event_jMenuItem4ActionPerformed
+
+   private void jMenuItem6ActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem6ActionPerformed
+      // TODO add your handling code here:
+
+      if (this.undoManager.canUndo()) {
+         this.undoManager.undo();
+      } else {
+         this.getToolkit().beep();
+      }
+   }// GEN-LAST:event_jMenuItem6ActionPerformed
+
+   private void jMenuItem7ActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItem7ActionPerformed
+      // TODO add your handling code here:
+      if (this.undoManager.canRedo()) {
+         this.undoManager.redo();
+      } else {
+         this.getToolkit().beep();
+      }
+   }// GEN-LAST:event_jMenuItem7ActionPerformed
+
+   private void jMMediaImagensActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMMediaImagensActionPerformed
+
+      final JFileChooser fc = new JFileChooser();
+      fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+      final int result = fc.showOpenDialog(this);
+
+      if (result == JFileChooser.CANCEL_OPTION) {
+         return;
+      }
+
+      if (result == JFileChooser.APPROVE_OPTION) {
+         final File arquivo = fc.getSelectedFile();
+         if ((arquivo == null) || arquivo.getName().equals("")) {
+            JOptionPane.showMessageDialog(this, "Nome de arquivo inválido!", "Nome de arquivo inválido", JOptionPane.ERROR_MESSAGE);
+         } else {
+            try {
+               final BufferedImage bi = ImageIO.read(arquivo);
+
+               JInternalFrame jif = null;
+               final Component[] com = this.jPanel1.getComponents();
+               for (final Component c : com) {
+
+                  if (c instanceof JInternalFrame) {
+
+                     final JInternalFrame frame = (JInternalFrame) c;
+                     if (frame.isSelected()) {
+                        jif = frame;
+                        break;
+                     }
+                  }
+               }
+               if (jif != null) {
+
+                  BufferedImage b = null;
+                  try {
+                     b = ImageIO.read(new File(jif.getTitle()));
+                  }
+                  catch (final IOException ex) {
+                     ex.printStackTrace();
+                  }
+
+                  b = this.filtros.sumOfTwoRGB(bi);
+
+                  final JInternalFrame picFrame = new JInternalFrame();
+                  // picFrame.setLayout(new BorderLayout());
+
+                  picFrame.setClosable(true);
+                  picFrame.setResizable(true);
+                  picFrame.setMaximizable(true);
+                  picFrame.setTitle("Media de Duas Imagens");
+
+                  final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(), 3)));
+
+                  picFrame.add(picLabel, BorderLayout.CENTER);
+                  this.jPanel1.add(picFrame);
+
+                  picFrame.setVisible(true);
+                  picLabel.setVisible(true);
+
+               }
+
+            }
+            catch (final Exception e) {
+
+            }
+         }
+      }
+
+   }// GEN-LAST:event_jMMediaImagensActionPerformed
+
+   private void jMMedianaRGBActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMMedianaRGBActionPerformed
+
+      JInternalFrame jif = null;
+      final Component[] com = this.jPanel1.getComponents();
+      for (final Component c : com) {
+
+         if (c instanceof JInternalFrame) {
+
+            final JInternalFrame frame = (JInternalFrame) c;
+            if (frame.isSelected()) {
+               jif = frame;
+               break;
+            }
+         }
+      }
+      if (jif != null) {
+
+         BufferedImage b = null;
+         try {
+            b = ImageIO.read(new File(jif.getTitle()));
+
+            final String valor = JOptionPane.showInputDialog(this, "Insira a mascara desejada: (Numero Impar Positivo)", "Mascara",
+                     JOptionPane.OK_OPTION);
+
+            final int v = Math.abs(Integer.parseInt(valor));
+
+            b = this.filtros.medianaRGB(v);
+
+            final JInternalFrame picFrame = new JInternalFrame();
+            // picFrame.setLayout(new BorderLayout());
+
+            picFrame.setClosable(true);
+            picFrame.setResizable(true);
+            picFrame.setMaximizable(true);
+            picFrame.setTitle("Mediana RGB - Mascara: " + v);
+
+            final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(), 3)));
+
+            picFrame.add(picLabel, BorderLayout.CENTER);
+            this.jPanel1.add(picFrame);
+
+            picFrame.setVisible(true);
+            picLabel.setVisible(true);
+         }
+         catch (final IOException ex) {
+            ex.printStackTrace();
+         }
+      }
+
+   }// GEN-LAST:event_jMMedianaRGBActionPerformed
+
+   private void jMMedianaYIQActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMMedianaYIQActionPerformed
+
+      JInternalFrame jif = null;
+      final Component[] com = this.jPanel1.getComponents();
+      for (final Component c : com) {
+
+         if (c instanceof JInternalFrame) {
+
+            final JInternalFrame frame = (JInternalFrame) c;
+            if (frame.isSelected()) {
+               jif = frame;
+               break;
+            }
+         }
+      }
+      if (jif != null) {
+
+         BufferedImage b = null;
+         try {
+            b = ImageIO.read(new File(jif.getTitle()));
+
+            final String valor = JOptionPane.showInputDialog(this, "Insira a mascara desejada: (Numero Impar Positivo)", "Mascara",
+                     JOptionPane.OK_OPTION);
+
+            final int v = Math.abs(Integer.parseInt(valor));
+
+            b = this.filtros.medianaYIQ(v);
+
+            final JInternalFrame picFrame = new JInternalFrame();
+            // picFrame.setLayout(new BorderLayout());
+
+            picFrame.setClosable(true);
+            picFrame.setResizable(true);
+            picFrame.setMaximizable(true);
+            picFrame.setTitle("Mediana YIQ - Mascara: " + v);
+
+            final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(), 3)));
+
+            picFrame.add(picLabel, BorderLayout.CENTER);
+            this.jPanel1.add(picFrame);
+
+            picFrame.setVisible(true);
+            picLabel.setVisible(true);
+         }
+         catch (final IOException ex) {
+            ex.printStackTrace();
+         }
+      }
+
+   }// GEN-LAST:event_jMMedianaYIQActionPerformed
+
+   private void jMMediaRGBActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMMediaRGBActionPerformed
+
+      JInternalFrame jif = null;
+      final Component[] com = this.jPanel1.getComponents();
+      for (final Component c : com) {
+
+         if (c instanceof JInternalFrame) {
+
+            final JInternalFrame frame = (JInternalFrame) c;
+            if (frame.isSelected()) {
+               jif = frame;
+               break;
+            }
+         }
+      }
+      if (jif != null) {
+
+         BufferedImage b = null;
+         try {
+            b = ImageIO.read(new File(jif.getTitle()));
+
+            final String valor = JOptionPane.showInputDialog(this, "Insira a mascara desejada: (Numero Impar Positivo)", "Mascara",
+                     JOptionPane.OK_OPTION);
+
+            final int v = Math.abs(Integer.parseInt(valor));
+
+            b = this.filtros.mediumRGB(v);
+
+            final JInternalFrame picFrame = new JInternalFrame();
+            // picFrame.setLayout(new BorderLayout());
+
+            picFrame.setClosable(true);
+            picFrame.setResizable(true);
+            picFrame.setMaximizable(true);
+            picFrame.setTitle("Media RGB - Mascara: " + v);
+
+            final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(), 3)));
+
+            picFrame.add(picLabel, BorderLayout.CENTER);
+            this.jPanel1.add(picFrame);
+
+            picFrame.setVisible(true);
+            picLabel.setVisible(true);
+         }
+         catch (final IOException ex) {
+            ex.printStackTrace();
+         }
+      }
+
+   }// GEN-LAST:event_jMMediaRGBActionPerformed
+
+   private void jMMediaYIQActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMMediaYIQActionPerformed
+
+      JInternalFrame jif = null;
+      final Component[] com = this.jPanel1.getComponents();
+      for (final Component c : com) {
+
+         if (c instanceof JInternalFrame) {
+
+            final JInternalFrame frame = (JInternalFrame) c;
+            if (frame.isSelected()) {
+               jif = frame;
+               break;
+            }
+         }
+      }
+      if (jif != null) {
+
+         BufferedImage b = null;
+         try {
+            b = ImageIO.read(new File(jif.getTitle()));
+
+            final String valor = JOptionPane.showInputDialog(this, "Insira a mascara desejada: (Numero Impar Positivo)", "Mascara",
+                     JOptionPane.OK_OPTION);
+
+            final int v = Math.abs(Integer.parseInt(valor));
+
+            b = this.filtros.mediumYIQ(v);
+
+            final JInternalFrame picFrame = new JInternalFrame();
+            // picFrame.setLayout(new BorderLayout());
+
+            picFrame.setClosable(true);
+            picFrame.setResizable(true);
+            picFrame.setMaximizable(true);
+            picFrame.setTitle("Media YIQ - Mascara: " + v);
+
+            final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(), 3)));
+
+            picFrame.add(picLabel, BorderLayout.CENTER);
+            this.jPanel1.add(picFrame);
+
+            picFrame.setVisible(true);
+            picLabel.setVisible(true);
+         }
+         catch (final IOException ex) {
+            ex.printStackTrace();
+         }
+      }
+
+   }// GEN-LAST:event_jMMediaYIQActionPerformed
+
+   private void jMModaRGBActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMModaRGBActionPerformed
+
+      JInternalFrame jif = null;
+      final Component[] com = this.jPanel1.getComponents();
+      for (final Component c : com) {
+
+         if (c instanceof JInternalFrame) {
+
+            final JInternalFrame frame = (JInternalFrame) c;
+            if (frame.isSelected()) {
+               jif = frame;
+               break;
+            }
+         }
+      }
+      if (jif != null) {
+
+         BufferedImage b = null;
+         try {
+            b = ImageIO.read(new File(jif.getTitle()));
+
+            final String valor = JOptionPane.showInputDialog(this, "Insira a mascara desejada: (Numero Impar Positivo)", "Mascara",
+                     JOptionPane.OK_OPTION);
+
+            final int v = Math.abs(Integer.parseInt(valor));
+
+            b = this.filtros.modaRGB(v);
+
+            final JInternalFrame picFrame = new JInternalFrame();
+            // picFrame.setLayout(new BorderLayout());
+
+            picFrame.setClosable(true);
+            picFrame.setResizable(true);
+            picFrame.setMaximizable(true);
+            picFrame.setTitle("Moda RGB - Mascara: " + v);
+
+            final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(), 3)));
+
+            picFrame.add(picLabel, BorderLayout.CENTER);
+            this.jPanel1.add(picFrame);
+
+            picFrame.setVisible(true);
+            picLabel.setVisible(true);
+         }
+         catch (final IOException ex) {
+            ex.printStackTrace();
+         }
+      }
+
+   }// GEN-LAST:event_jMModaRGBActionPerformed
+
+   private void jMModaYIQActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMModaYIQActionPerformed
+
+      JInternalFrame jif = null;
+      final Component[] com = this.jPanel1.getComponents();
+      for (final Component c : com) {
+
+         if (c instanceof JInternalFrame) {
+
+            final JInternalFrame frame = (JInternalFrame) c;
+            if (frame.isSelected()) {
+               jif = frame;
+               break;
+            }
+         }
+      }
+      if (jif != null) {
+
+         BufferedImage b = null;
+         try {
+            b = ImageIO.read(new File(jif.getTitle()));
+
+            final String valor = JOptionPane.showInputDialog(this, "Insira a mascara desejada: (Numero Impar Positivo)", "Mascara",
+                     JOptionPane.OK_OPTION);
+
+            final int v = Math.abs(Integer.parseInt(valor));
+
+            b = this.filtros.modaYIQ(v);
+
+            final JInternalFrame picFrame = new JInternalFrame();
+            // picFrame.setLayout(new BorderLayout());
+
+            picFrame.setClosable(true);
+            picFrame.setResizable(true);
+            picFrame.setMaximizable(true);
+            picFrame.setTitle("Moda YIQ - Mascara: " + v);
+
+            final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(), 3)));
+
+            picFrame.add(picLabel, BorderLayout.CENTER);
+            this.jPanel1.add(picFrame);
+
+            picFrame.setVisible(true);
+            picLabel.setVisible(true);
+         }
+         catch (final IOException ex) {
+            ex.printStackTrace();
+         }
+      }
+
+   }// GEN-LAST:event_jMModaYIQActionPerformed
+
+   private void jMNegRGBActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMNegRGBActionPerformed
+
+      JInternalFrame jif = null;
+      final Component[] com = this.jPanel1.getComponents();
+      for (final Component c : com) {
+
+         if (c instanceof JInternalFrame) {
+
+            final JInternalFrame frame = (JInternalFrame) c;
+            if (frame.isSelected()) {
+               jif = frame;
+               break;
+            }
+         }
+      }
+      if (jif != null) {
+
+         BufferedImage b = null;
+         try {
+            b = ImageIO.read(new File(jif.getTitle()));
+         }
+         catch (final IOException ex) {
+            ex.printStackTrace();
+         }
+
+         b = this.filtros.negativeRGB(this.bi);
+
+         final JInternalFrame picFrame = new JInternalFrame();
+         // picFrame.setLayout(new BorderLayout());
+
+         picFrame.setClosable(true);
+         picFrame.setResizable(true);
+         picFrame.setMaximizable(true);
+         picFrame.setTitle("Negativo RGB");
+
+         final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(), 3)));
+
+         picFrame.add(picLabel, BorderLayout.CENTER);
+         this.jPanel1.add(picFrame);
+
+         picFrame.setVisible(true);
+         picLabel.setVisible(true);
+
+      }
+
+   }// GEN-LAST:event_jMNegRGBActionPerformed
+
+   private void jMNegYIQActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMNegYIQActionPerformed
+
+      JInternalFrame jif = null;
+      final Component[] com = this.jPanel1.getComponents();
+      for (final Component c : com) {
+
+         if (c instanceof JInternalFrame) {
+
+            final JInternalFrame frame = (JInternalFrame) c;
+            if (frame.isSelected()) {
+               jif = frame;
+               break;
+            }
+         }
+      }
+      if (jif != null) {
+
+         BufferedImage b = null;
+         try {
+            b = ImageIO.read(new File(jif.getTitle()));
+         }
+         catch (final IOException ex) {
+            ex.printStackTrace();
+         }
+
+         b = this.filtros.negativeYIQ();
+
+         final JInternalFrame picFrame = new JInternalFrame();
+         // picFrame.setLayout(new BorderLayout());
+
+         picFrame.setClosable(true);
+         picFrame.setResizable(true);
+         picFrame.setMaximizable(true);
+         picFrame.setTitle("Negativo YIQ");
+
+         final JLabel picLabel = new JLabel(new ImageIcon(b.getScaledInstance(b.getWidth(), b.getHeight(), 3)));
+
+         picFrame.add(picLabel, BorderLayout.CENTER);
+         this.jPanel1.add(picFrame);
+
+         picFrame.setVisible(true);
+         picLabel.setVisible(true);
+
+      }
+
+   }// GEN-LAST:event_jMNegYIQActionPerformed
+
+   private void jMSuaveMediaActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMSuaveMediaActionPerformed
+      // TODO add your handling code here:
+   }// GEN-LAST:event_jMSuaveMediaActionPerformed
+
+   private void manutencao(final String title) {
+      JOptionPane.showMessageDialog(null, "   Em construção... Desculpe-nos o transtorno.\nEstamos trabalhando para sua maior comodidade.",
+               title, JOptionPane.WARNING_MESSAGE);
+   }
+
+   public void openFile() {
+      final JFileChooser fc = new JFileChooser();
+      fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+      final int result = fc.showOpenDialog(this);
+
+      if (result == JFileChooser.CANCEL_OPTION) {
+         return;
+      }
+
+      if (result == JFileChooser.APPROVE_OPTION) {
+         final File arquivo = fc.getSelectedFile();
+         if ((arquivo == null) || arquivo.getName().equals("")) {
+            JOptionPane.showMessageDialog(this, "Nome de arquivo inválido!", "Nome de arquivo inválido", JOptionPane.ERROR_MESSAGE);
+         } else {
+            try {
+               this.bi = ImageIO.read(arquivo);
+               this.filtros = new Filtros(this.bi);
+
+               final JInternalFrame picFrame = new JInternalFrame();
+               // picFrame.setLayout(new BorderLayout());
+               picFrame.setTitle(arquivo.getName());
+               picFrame.setClosable(true);
+               picFrame.setResizable(true);
+               picFrame.setMaximizable(true);
+               picFrame.setTitle(arquivo.getAbsolutePath());
+
+               picFrame.setIconifiable(true);
+
+               final JPanel pane = new JPanel(new BorderLayout());
+
+               final JLabel picLabel = new JLabel(new ImageIcon(arquivo.getPath()));
+               picLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+               pane.add(picLabel, BorderLayout.CENTER);
+               picFrame.add(pane);
+               // picFrame.setLayout(new BorderLayout());
+               this.jPanel1.add(picFrame);
+
+               this.jPanel1.setVisible(true);
+               picFrame.setVisible(true);
+               picLabel.setVisible(true);
+
+               SwingUtilities.updateComponentTreeUI(this);
+
+               this.drillChata = false;
+               // jMenuItem3.setEnabled(false);
+
+               this.setTitle("Humbot - " + arquivo.getName());
+            }
+            catch (final IOException ex) {
+               JOptionPane.showMessageDialog(this, "Erro ao abrir a imagem!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+         }
+
+      }
+   }
+
+   public void saveFile() {
+
+      if (this.filtros != null) {
+         final BufferedImage im = this.filtros.getImageProcessed();
+
+         if (im != null) {
+
+            final JFileChooser fc = new JFileChooser();
+            fc.setDialogType(JFileChooser.SAVE_DIALOG);
+
+            final int result = fc.showSaveDialog(this);
+
+            System.out.println(" SALVAAA");
+            System.out.println(this.filtros.getImageProcessed());
+            if (result == JFileChooser.CANCEL_OPTION) {
+               return;
+            }
+
+            // if(result == JFileChooser.APPROVE_OPTION) {
+            final File arquivo = fc.getSelectedFile();
+            if ((arquivo == null) || arquivo.getName().equals("")) {
+               JOptionPane.showMessageDialog(this, "Nome de arquivo inválido!", "Nome de arquivo inválido", JOptionPane.ERROR_MESSAGE);
+            } else {
+
+               try {
+
+                  ImageIO.write(im, "JPG", arquivo);
+               }
+               catch (final Exception ex) {
+                  JOptionPane.showMessageDialog(this, "Erro ao salvar o arquivo!", "Erro", JOptionPane.ERROR_MESSAGE);
+               }
+            }
+         } else {
+            JOptionPane.showMessageDialog(this, "Erro, nenhum processamento foi realizado!", "Erro", JOptionPane.ERROR_MESSAGE);
+         }
+      } else {
+         JOptionPane.showMessageDialog(this, "Erro, imagem inexistente!", "Erro", JOptionPane.ERROR_MESSAGE);
+      }
+      // }
+   }
+}

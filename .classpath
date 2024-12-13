@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="Projeto de Reconhecimento de Placas/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="Projeto de Reconhecimento de Placas/src/ij.jar"/>
+	<classpathentry kind="lib" path="jai_codec.jar"/>
+	<classpathentry kind="lib" path="jai_core.jar"/>
+	<classpathentry kind="lib" path="mlib_jai_mmx.dll"/>
+	<classpathentry kind="lib" path="mlib_jai.dll"/>
+	<classpathentry kind="lib" path="mlibwrapper_jai.jar"/>
+	<classpathentry kind="output" path="Projeto de Reconhecimento de Placas/bin"/>
+</classpath>
